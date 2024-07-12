@@ -1,5 +1,7 @@
 package com.monchito.forohub.domain.topico;
 
+import com.monchito.forohub.domain.autor.Autor;
+import com.monchito.forohub.domain.respuesta.Respuesta;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -33,4 +35,12 @@ public class Topico {
     @OneToMany(mappedBy = "topico", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Respuesta> respuestas;
 
+    public Topico(String titulo, String mensaje, Autor autor, LocalDateTime fechaCreacion, Curso curso) {
+        this.activo = true;
+        this.titulo = titulo;
+        this.mensaje = mensaje;
+        this.autor = autor;
+        this.fechaCreacion = fechaCreacion;
+        this.curso = curso;
+    }
 }

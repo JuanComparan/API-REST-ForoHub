@@ -1,5 +1,7 @@
-package com.monchito.forohub.domain.topico;
+package com.monchito.forohub.domain.respuesta;
 
+import com.monchito.forohub.domain.autor.Autor;
+import com.monchito.forohub.domain.topico.Topico;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
