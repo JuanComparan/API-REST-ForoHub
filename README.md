@@ -1,5 +1,5 @@
 <h1 align="center"> 💬 Foro Hub 💬 </h1>
-Programa de un Foro de topicos  
+Programa de un Foro Web
 
 ## 🔨 Funcionalidades del proyecto
 - `Funcionalidad 1`: Autenticacion con token: para poder hacer consultas necesitamos estar logeados.
@@ -11,9 +11,16 @@ Programa de un Foro de topicos
 ## ✔️ Tecnologias usadas
 - `Java JDK 17`
 - `Maven 4`
-- `Spring Data JPA`
 - `Spring Boot`
-- `PostgresSQL`
-- `Jackson Java`
-- `Streams Java`
-- `Derived Queries`
+
+## ✔️ Dependencias
+- `Spring Data JPA`
+- `Spring Security`
+- `Spring Web`
+- `Spring boot DevTools`
+- `FlyWay Migration`
+- `Lombok`
+- `PostgresSQL driver`
+- `Validation`
+- `FlyWay`
+- `Auth0`
