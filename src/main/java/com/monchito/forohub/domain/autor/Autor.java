@@ -1,7 +1,5 @@
 package com.monchito.forohub.domain.autor;
 
-import com.monchito.forohub.domain.respuesta.Respuesta;
-import com.monchito.forohub.domain.topico.Topico;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -28,13 +26,6 @@ public class Autor implements UserDetails {
     private String nombreDeUsuario;
     private String correoElectronico;
     private String contrasena;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "topico_id", referencedColumnName = "id")
-    private Topico topico;
-
-    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Respuesta> respuestas;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
