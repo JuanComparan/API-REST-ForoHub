@@ -22,7 +22,7 @@ public class TopicoController {
     private TopicoService servicio;
 
     @PostMapping
-    //@Transactional
+    @Transactional
     public ResponseEntity registrarTopico(@RequestBody @Valid DatosRegistroTopico datosRegistroTopico){
         var response = servicio.registrarTopico(datosRegistroTopico);
 

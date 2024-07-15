@@ -7,8 +7,8 @@ CREATE TABLE autores (
 
 CREATE TABLE topicos (
                          id SERIAL PRIMARY KEY,
-                         titulo VARCHAR(255) NOT NULL,
-                         mensaje TEXT NOT NULL,
+                         titulo VARCHAR(255) NOT NULL UNIQUE ,
+                         mensaje TEXT NOT NULL UNIQUE ,
                          fecha_creacion TIMESTAMP NOT NULL,
                          activo BOOLEAN NOT NULL,
                          autor_id BIGINT,
