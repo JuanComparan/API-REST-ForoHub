@@ -2,25 +2,24 @@
 Programa de un Foro Web
 
 ## 🔨 Funcionalidades del proyecto
-- `Funcionalidad 1`: Autenticacion con token: para poder hacer consultas necesitamos estar logeados.
-- `Funcionalidad 2`: Registrar topicos: podemos crear topicos con sus respectivos datos como el titulo, el mensaje y al curso al que pertenece.
-- `Funcionalidad 3`: Actualizar topicos: podemos actualizar los datos de un topico creado anteriormente.
-- `Funcionalidad 4`: Obtener los topicos por lista o de forma individual: podemos obtener una lista de nuestros topicos creados de forma ordenada por fecha de creacion o podemos buscarlos por su id de forma individual.
-- `Funcionalidad 5`: Eliminar topicos: tambien podemos eliminar los topicos de nuestro foro. 
+- `Autenticación con token:` Para poder hacer consultas, necesitamos estar logeados.
+- `Registrar topicos:` Podemos crear topicos con sus respectivos datos como el titulo, el mensaje y al curso al que pertenece.
+- `Actualizar topicos:` Podemos actualizar los datos de un topico creado anteriormente.
+- `Obtener los topicos por lista o de forma individual:` Podemos obtener una lista de nuestros topicos creados de forma ordenada por fecha de creacion o podemos buscarlos por su id de forma individual.
+- `Eliminar topicos:` Tambien podemos eliminar los topicos de nuestro foro. 
 
 ## ✔️ Tecnologias usadas
-- `Java JDK 17`
-- `Maven 4`
-- `Spring Boot`
+- `Lenguaje de Programación:`  Java JDK 17
+- `Herramientas de Construcción:` Maven 4
+- `Framework:`  Spring Boot
 
 ## ✔️ Dependencias
-- `Spring Data JPA`
-- `Spring Security`
-- `Spring Web`
-- `Spring boot DevTools`
-- `FlyWay Migration`
-- `Lombok`
-- `PostgresSQL driver`
-- `Validation`
-- `FlyWay`
-- `Auth0`
+- `Persistencia de Datos:` Spring Data JPA
+- `Seguridad:` Spring Security
+- `Desarrollo Web:` Spring Web
+- `Herramientas de Desarrollo:` Spring Boot DevTools
+- `Migración de Base de Datos:` FlyWay Migration
+- `Utilidades:` Lombok
+- `Base de Datos:` PostgreSQL driver
+- `Validación:` Validation
+- `Autenticación:` Auth0
