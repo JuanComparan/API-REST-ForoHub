@@ -1,6 +1,8 @@
 package com.monchito.forohub.domain.topico;
 
 import com.monchito.forohub.domain.autor.Autor;
+import com.monchito.forohub.domain.curso.Curso;
+import com.monchito.forohub.domain.respuesta.Respuesta;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -8,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Table(name = "topicos")
 @Entity(name = "Topico")
@@ -25,11 +29,19 @@ public class Topico {
     private LocalDateTime fechaCreacion;
     private boolean activo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Autor autor;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Curso curso;
+
+    @ManyToMany
+    @JoinTable(
+            name = "topico_respuesta",
+            joinColumns = @JoinColumn(name = "topico_id"),
+            inverseJoinColumns = @JoinColumn(name = "respuesta_id")
+    )
+    private List<Respuesta> respuestas = new ArrayList<>();
 
     public Topico(String titulo, String mensaje, Autor autor, LocalDateTime fechaCreacion, Curso curso) {
         this.activo = true;
@@ -50,5 +62,9 @@ public class Topico {
             if (datos.curso() != null) {
                 this.curso = datos.curso();
             }
+    }
+
+    public void agregarRespuesta(Respuesta respuesta) {
+        this.respuestas.add(respuesta);
     }
 }
