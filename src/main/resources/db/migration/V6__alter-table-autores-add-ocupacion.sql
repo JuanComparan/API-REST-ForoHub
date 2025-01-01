@@ -1,0 +1,2 @@
+ALTER TABLE autores ADD ocupacion VARCHAR(255) NOT NULL;
+

@@ -26,6 +26,7 @@ public class Autor implements UserDetails {
     private String nombreDeUsuario;
     private String correoElectronico;
     private String contrasena;
+    private String ocupacion;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -60,5 +61,12 @@ public class Autor implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Autor(String nombre, String correoElectronico, String contrasena, String ocupacion) {
+        this.nombreDeUsuario = nombre;
+        this.correoElectronico = correoElectronico;
+        this.contrasena = contrasena;
+        this.ocupacion = ocupacion;
     }
 }
