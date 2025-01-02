@@ -4,12 +4,43 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import globalStyles from "../../styles/globalStyles";
 import InputComponent from "../../components/inputComponent";
 import InputPasswordComponent from "../../components/inputPasswordComponent";
+import { autorError, crearAutor } from "../api/SignUpService";
+import { useEffect, useState } from "react";
 
 interface Props {
     navigation: StackNavigationProp<any>;
+    onAutorAdd: () => void;
 }
 
-export default function SignUp({ navigation }: Props) {
+export default function SignUp({ navigation, onAutorAdd }: Props) {
+    // Definimos las variables
+    const [nombre, setNombre] = useState("");
+    const [correoElectronico, setCorreoElectronico] = useState("");
+    const [contrasena, setContrasena] = useState("");
+    const [ocupacion, setOcupacion] = useState("");
+    // Variable para guardar errores
+    const [error, setError] = useState<{
+        title: string;
+        errorMessages: string[];
+    } | null>(null);
+
+    useEffect(() => {
+        setError(autorError);
+    }, [autorError]);
+
+    const handleAction = () => {
+        // Llamamos al Service
+        crearAutor(
+            navigation,
+            nombre,
+            correoElectronico,
+            contrasena,
+            ocupacion,
+            onAutorAdd,
+            setError
+        )
+    };
+
     return (
         <LinearGradient
             // Colores del degradado
@@ -34,14 +65,18 @@ export default function SignUp({ navigation }: Props) {
                             <Text style={globalStyles.title}>Registro</Text>
                         </View>
                         <View style={globalStyles.inputArea}>
-                            <InputComponent text="Nombre de usuario" />
-                            <InputComponent text="Ocupación" />
-                            <InputComponent text="Correo electronico" />
-                            <InputComponent text="Confirmar correo electronico" />
-                            <InputPasswordComponent text="Contraseña" />
+                            <InputComponent text="Nombre de usuario" value={nombre} variable={setNombre} />
+                            <InputComponent text="Ocupación" value={ocupacion} variable={setOcupacion} />
+                            <InputComponent text="Correo electronico" value={correoElectronico} variable={setCorreoElectronico} />
+                            <InputPasswordComponent text="Contraseña" value={contrasena} variable={setContrasena} />
                         </View>
                         <View style={globalStyles.buttonArea}>
-                            <Pressable style={[globalStyles.button, {width: "60%"}]} onPress={() => navigation.navigate("Welcome")}>
+                            {error && (
+                                <Text style={globalStyles.error}>
+                                    {error.title}: {error.errorMessages.join(", ")}
+                                </Text>
+                            )}
+                            <Pressable style={[globalStyles.button, { width: "60%" }]} onPress={handleAction}>
                                 <Text style={globalStyles.text}>Registrarse</Text>
                             </Pressable>
                         </View>

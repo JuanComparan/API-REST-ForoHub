@@ -42,6 +42,14 @@ public class TopicoController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/autor/{id}")
+    public ResponseEntity <Page<DatosDetalleTopico>> listarTopicosPorAutor(@PathVariable Long id, @PageableDefault(size = 4, sort = "fechaCreacion",
+            direction = Sort.Direction.DESC) Pageable paginacion){
+        var response =  servicio.obtenerTopicoPorAutor(id, paginacion);
+
+        return ResponseEntity.ok(response);
+    }
+
     @PutMapping
     @Transactional
     public ResponseEntity actualizarTopico(@RequestBody @Valid DatosActualizarTopico datosActualizarTopico){

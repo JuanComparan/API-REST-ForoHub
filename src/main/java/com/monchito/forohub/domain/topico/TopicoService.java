@@ -4,6 +4,8 @@ import com.monchito.forohub.domain.autor.AutorRepository;
 import com.monchito.forohub.domain.curso.CursoRepository;
 import com.monchito.forohub.infra.errors.ValidacionDeIntegridad;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -60,6 +62,16 @@ public class TopicoService {
         var topico = topicoRepository.findById(id).get();
 
         return new DatosDetalleTopico(topico);
+    }
+
+    public Page<DatosDetalleTopico> obtenerTopicoPorAutor(Long id, Pageable paginacion) {
+        if(!autorRepository.findById(id).isPresent()){
+            throw  new ValidacionDeIntegridad("Este id para el usuario no fue encontrado");
+        }
+
+        var topico = topicoRepository.findByAutorId(id, paginacion);
+
+        return topico.map(DatosDetalleTopico::new);
     }
 
     public void eliminarTopico(Long id) {

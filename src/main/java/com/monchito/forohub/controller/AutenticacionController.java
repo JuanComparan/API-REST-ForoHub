@@ -17,23 +17,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/login")
-public class AutenticacionController {
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private TokenService tokenService;
-
-    @PostMapping
-    @Transactional
-    public ResponseEntity autenticarUsuario(@RequestBody @Valid DatosAutenticacionUsuario datosAutenticacionUsuario) {
-        Authentication authToken = new UsernamePasswordAuthenticationToken(datosAutenticacionUsuario.nombreDeUsuario(),
-                datosAutenticacionUsuario.contrasena());
-        var usuarioAutenticado = authenticationManager.authenticate(authToken);
-        var JWTtoken = tokenService.generarToken((Autor) usuarioAutenticado.getPrincipal());
-        return ResponseEntity.ok(new DatosJWTtoken(JWTtoken));
-    }
-}
+//@RestController
+//@RequestMapping("/login")
+//public class AutenticacionController {
+//
+//    @Autowired
+//    private AuthenticationManager authenticationManager;
+//
+//    @Autowired
+//    private TokenService tokenService;
+//
+//    @PostMapping
+//    @Transactional
+//    public ResponseEntity autenticarUsuario(@RequestBody @Valid DatosAutenticacionUsuario datosAutenticacionUsuario) {
+//        Authentication authToken = new UsernamePasswordAuthenticationToken(datosAutenticacionUsuario.nombreDeUsuario(),
+//                datosAutenticacionUsuario.contrasena());
+//        var usuarioAutenticado = authenticationManager.authenticate(authToken);
+//        var JWTtoken = tokenService.generarToken((Autor) usuarioAutenticado.getPrincipal());
+//        return ResponseEntity.ok(new DatosJWTtoken(JWTtoken));
+//    }
+//}

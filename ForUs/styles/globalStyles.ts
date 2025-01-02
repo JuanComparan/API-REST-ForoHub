@@ -47,6 +47,12 @@ const globalStyles = StyleSheet.create({
         color: "#ffffff",
         textAlign: "center",
     },
+    error: {
+        color: 'red',
+        fontSize: 14,
+        marginVertical: 10,
+        textAlign: 'center',
+    },
     // Botones
     input: {
         alignSelf: "center",
