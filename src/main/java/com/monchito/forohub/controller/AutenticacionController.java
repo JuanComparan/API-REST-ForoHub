@@ -1,6 +1,7 @@
 package com.monchito.forohub.controller;
 
 import com.monchito.forohub.domain.autor.Autor;
+import com.monchito.forohub.domain.autor.AutorService;
 import com.monchito.forohub.domain.autor.DatosAutenticacionUsuario;
 import com.monchito.forohub.infra.security.AutenticacionService;
 import com.monchito.forohub.infra.security.DatosJWTtoken;
@@ -17,10 +18,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-//@RestController
-//@RequestMapping("/login")
-//public class AutenticacionController {
-//
+@RestController
+@RequestMapping("/login")
+public class AutenticacionController {
+
+    @Autowired
+    private AutorService autorService;
+
+    @PostMapping
+    @Transactional
+    public ResponseEntity loginRequest(@RequestBody @Valid DatosAutenticacionUsuario datosAutenticacionUsuario) {
+        var response = autorService.loginRequest(datosAutenticacionUsuario);
+
+        // Regresamos un 200 si esta ok
+        return ResponseEntity.ok(response);
+    }
+
 //    @Autowired
 //    private AuthenticationManager authenticationManager;
 //
@@ -36,4 +49,4 @@ import org.springframework.web.bind.annotation.RestController;
 //        var JWTtoken = tokenService.generarToken((Autor) usuarioAutenticado.getPrincipal());
 //        return ResponseEntity.ok(new DatosJWTtoken(JWTtoken));
 //    }
-//}
+}

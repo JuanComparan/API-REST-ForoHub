@@ -9,8 +9,6 @@ public record DatosRegistroRespuesta(
         @NotNull(message = "{usuario obligatorio}")
         Long IdAutor,
         @NotNull(message = "{topico obligatorio}")
-        Long IdTopico,
-        @NotNull(message = "{solucion_obligatorio}")
-        Solucion solucion
+        Long IdTopico
 ) {
 }

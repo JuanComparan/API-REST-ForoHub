@@ -29,16 +29,13 @@ public class Respuesta {
     private LocalDateTime fechaCreacion;
     @ManyToOne(fetch = FetchType.EAGER)
     private Autor autor;
-    @Enumerated(EnumType.STRING)
-    private Solucion solucion;
     @ManyToMany(mappedBy = "respuestas", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Topico> topicos = new ArrayList<>();
 
-    public Respuesta(String mensaje, Autor autor, Topico topico, Solucion solucion, LocalDateTime fechaCreacion) {
+    public Respuesta(String mensaje, Autor autor, Topico topico, LocalDateTime fechaCreacion) {
         this.mensaje = mensaje;
         this.autor = autor;
         this.topicos.add(topico);
-        this.solucion = solucion;
         this.fechaCreacion = fechaCreacion;
     }
 

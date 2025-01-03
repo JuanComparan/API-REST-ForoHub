@@ -34,7 +34,7 @@ public class TopicoService {
         var autor = autorRepository.findById(datos.IdAutor()).get();
         var curso = cursoRepository.findById(datos.IdCurso()).get();
         var fechaCreacion = LocalDateTime.now();
-        var topico = new Topico(datos.titulo(), datos.mensaje(), autor, fechaCreacion, curso);
+        var topico = new Topico(datos.titulo(), datos.mensaje(), autor, fechaCreacion, curso, datos.solucion());
 
         topicoRepository.save(topico);
 

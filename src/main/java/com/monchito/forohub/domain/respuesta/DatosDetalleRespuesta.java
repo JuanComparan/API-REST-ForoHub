@@ -13,13 +13,12 @@ public record DatosDetalleRespuesta(
         String mensaje,
         String autor,
         List<DatosDetalleTopicoRespuesta> topico,
-        LocalDateTime fecha,
-        Solucion solucion
+        LocalDateTime fecha
 ) {
 
     public DatosDetalleRespuesta(Respuesta respuesta) {
         this(respuesta.getId(), respuesta.getMensaje(), respuesta.getAutor().getNombreDeUsuario(),
                 respuesta.getTopicos().stream().map(DatosDetalleTopicoRespuesta::new).collect(Collectors.toList()),
-                respuesta.getFechaCreacion(), respuesta.getSolucion());
+                respuesta.getFechaCreacion());
     }
 }

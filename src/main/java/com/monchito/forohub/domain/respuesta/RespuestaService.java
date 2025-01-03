@@ -34,7 +34,7 @@ public class RespuestaService {
         var autor = autorRepository.findById(datos.IdAutor()).get();
         var topico = topicoRepository.findById(datos.IdTopico()).get();
         var fechaCreacion = LocalDateTime.now();
-        var respuesta = new Respuesta(datos.mensaje(), autor, topico, datos.solucion(), fechaCreacion);
+        var respuesta = new Respuesta(datos.mensaje(), autor, topico, fechaCreacion);
         topico.agregarRespuesta(respuesta);
 
         respuestaRepository.save(respuesta);

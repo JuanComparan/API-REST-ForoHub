@@ -7,17 +7,22 @@ const globalStyles = StyleSheet.create({
         justifyContent: "center",
     },
     topScreen: {
+        flex: 1,
         alignItems: "center", // Centra la imagen y el texto
+        marginTop: 50,
         marginBottom: 20, // Espaciado entre la imagen y los inputs
     },
     inputArea: {
+        flex: 1,
         justifyContent: "center",
         paddingHorizontal: 20,
     },
     buttonArea: {
+        flex: 1,
         justifyContent: "center",
         paddingHorizontal: 20,
         marginTop: 20,
+        marginBottom: 30,
     },
     // Contenedores
     inputContainer: {

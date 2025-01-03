@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { StatusBar, View } from 'react-native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { NavigationContainer } from '@react-navigation/native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Welcome from './screens/Welcome';
 import Home from './screens/Home';
 import SignUp from './screens/SignUp';
@@ -14,9 +15,10 @@ export default function App() {
     StatusBar.setBarStyle('light-content');
   }, []);
   return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName='Welcome'
+          initialRouteName='Home'
           screenOptions={{
             headerShown: false,
             animation: 'fade_from_bottom'
@@ -36,5 +38,6 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
+    </GestureHandlerRootView>
   );
 }

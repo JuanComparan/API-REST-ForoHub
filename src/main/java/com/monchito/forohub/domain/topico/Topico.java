@@ -3,6 +3,7 @@ package com.monchito.forohub.domain.topico;
 import com.monchito.forohub.domain.autor.Autor;
 import com.monchito.forohub.domain.curso.Curso;
 import com.monchito.forohub.domain.respuesta.Respuesta;
+import com.monchito.forohub.domain.respuesta.Solucion;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -35,6 +36,9 @@ public class Topico {
     @ManyToOne(fetch = FetchType.EAGER)
     private Curso curso;
 
+    @Enumerated(EnumType.STRING)
+    private Solucion solucion;
+
     @ManyToMany
     @JoinTable(
             name = "topico_respuesta",
@@ -43,13 +47,14 @@ public class Topico {
     )
     private List<Respuesta> respuestas = new ArrayList<>();
 
-    public Topico(String titulo, String mensaje, Autor autor, LocalDateTime fechaCreacion, Curso curso) {
+    public Topico(String titulo, String mensaje, Autor autor, LocalDateTime fechaCreacion, Curso curso, Solucion solucion) {
         this.activo = true;
         this.titulo = titulo;
         this.mensaje = mensaje;
         this.autor = autor;
         this.fechaCreacion = fechaCreacion;
         this.curso = curso;
+        this.solucion = solucion;
     }
 
     public void actualizarTopico(DatosActualizarTopico datos) {
@@ -59,8 +64,8 @@ public class Topico {
             if (datos.mensaje() != null) {
                 this.mensaje = datos.mensaje();
             }
-            if (datos.curso() != null) {
-                this.curso = datos.curso();
+            if (datos.solucion() != null) {
+                this.solucion = datos.solucion();
             }
     }
 

@@ -1,11 +1,12 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View, Text, Pressable } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View, Text, Pressable, StyleSheet } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import globalStyles from "../../styles/globalStyles";
 import InputComponent from "../../components/inputComponent";
 import InputPasswordComponent from "../../components/inputPasswordComponent";
 import { autorError, crearAutor } from "../api/SignUpService";
 import { useEffect, useState } from "react";
+import ImagePickerComponent from "../../components/ImagePickerComponent";
 
 interface Props {
     navigation: StackNavigationProp<any>;
@@ -22,6 +23,7 @@ export default function SignUp({ navigation, onAutorAdd }: Props) {
     const [error, setError] = useState<{
         title: string;
         errorMessages: string[];
+        time: string;
     } | null>(null);
 
     useEffect(() => {
@@ -52,45 +54,42 @@ export default function SignUp({ navigation, onAutorAdd }: Props) {
             end={{ x: 0, y: 1 }}
             style={{ flex: 1 }}
         >
-            <KeyboardAvoidingView
-                style={{ flex: 1 }}
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
+            <ScrollView
+                contentContainerStyle={globalStyles.scrollContainer}
+                keyboardShouldPersistTaps="handled"
             >
-                <ScrollView
-                    contentContainerStyle={globalStyles.scrollContainer}
-                    keyboardShouldPersistTaps="handled"
-                >
-                    <View style={globalStyles.screen}>
-                        <View style={globalStyles.topScreen}>
-                            <Text style={globalStyles.title}>Registro</Text>
-                        </View>
-                        <View style={globalStyles.inputArea}>
-                            <InputComponent text="Nombre de usuario" value={nombre} variable={setNombre} />
-                            <InputComponent text="Ocupación" value={ocupacion} variable={setOcupacion} />
-                            <InputComponent text="Correo electronico" value={correoElectronico} variable={setCorreoElectronico} />
-                            <InputPasswordComponent text="Contraseña" value={contrasena} variable={setContrasena} />
-                        </View>
-                        <View style={globalStyles.buttonArea}>
-                            {error && (
-                                <Text style={globalStyles.error}>
-                                    {error.title}: {error.errorMessages.join(", ")}
-                                </Text>
-                            )}
-                            <Pressable style={[globalStyles.button, { width: "60%" }]} onPress={handleAction}>
-                                <Text style={globalStyles.text}>Registrarse</Text>
-                            </Pressable>
-                        </View>
+                <View style={globalStyles.screen}>
+                    <View style={globalStyles.topScreen}>
+                        <Text style={globalStyles.title}>Registro</Text>
                     </View>
-
-                </ScrollView>
-            </KeyboardAvoidingView>
-
+                    <View style={globalStyles.inputArea}>
+                        <InputComponent text="Nombre de usuario" value={nombre} variable={setNombre} />
+                        <InputComponent text="Ocupación" value={ocupacion} variable={setOcupacion} />
+                        <InputComponent text="Correo electronico" value={correoElectronico} variable={setCorreoElectronico} />
+                        <InputPasswordComponent text="Contraseña" value={contrasena} variable={setContrasena} />
+                    </View>
+                    <View style={styles.imageArea}>
+                        <ImagePickerComponent/>
+                    </View>
+                    <View style={globalStyles.buttonArea}>
+                        {error && (
+                            <Text style={globalStyles.error}>
+                                {error.title}: {error.errorMessages.join(", ")}
+                            </Text>
+                        )}
+                        <Pressable style={[globalStyles.button, { width: "60%" }]} onPress={handleAction}>
+                            <Text style={globalStyles.text}>Registrarse</Text>
+                        </Pressable>
+                    </View>
+                </View>
+            </ScrollView>
         </LinearGradient>
     )
 }
 
 const styles = StyleSheet.create({
-    inputArea: {
-
-    },
+    imageArea: {
+        justifyContent: 'center',
+        paddingHorizontal: 80
+    }
 })

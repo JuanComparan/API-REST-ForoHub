@@ -6,12 +6,11 @@ public record DatosDetalleRespuestaTopico(
         Long id,
         String mensaje,
         String autor,
-        LocalDateTime fecha,
-        Solucion solucion
+        LocalDateTime fecha
 ) {
     public DatosDetalleRespuestaTopico(Respuesta respuesta) {
         this(respuesta.getId(), respuesta.getMensaje(),
                 respuesta.getAutor().getNombreDeUsuario(),
-                respuesta.getFechaCreacion(), respuesta.getSolucion());
+                respuesta.getFechaCreacion());
     }
 }

@@ -12,7 +12,7 @@ CREATE TABLE topicos (
                          fecha_creacion TIMESTAMP NOT NULL,
                          activo BOOLEAN NOT NULL,
                          autor_id BIGINT,
-                         curso VARCHAR(255),  -- curso como campo de texto
+                         solucion VARCHAR(255),
                          CONSTRAINT fk_autor
                              FOREIGN KEY (autor_id)
                                  REFERENCES autores(id)
