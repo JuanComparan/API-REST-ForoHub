@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-import { StatusBar, View } from 'react-native';
+import { StatusBar } from 'react-native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { NavigationContainer } from '@react-navigation/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Welcome from './screens/Welcome';
 import Home from './screens/Home';
 import SignUp from './screens/SignUp';
+import CreateTopico from './screens/CreateTopico';
+import { MyContextProvider, UserProvider } from './api/UserProvider';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,29 +17,35 @@ export default function App() {
     StatusBar.setBarStyle('light-content');
   }, []);
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName='Home'
-          screenOptions={{
-            headerShown: false,
-            animation: 'fade_from_bottom'
-          }}
-        >
-          <Stack.Screen
-            name="Welcome"
-            component={Welcome}
-          />
-          <Stack.Screen
-            name="Home"
-            component={Home}
-          />
-          <Stack.Screen
-            name="SignUp"
-            component={SignUp}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </GestureHandlerRootView>
+    <UserProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName='Welcome'
+            screenOptions={{
+              headerShown: false,
+              animation: 'fade_from_bottom'
+            }}
+          >
+            <Stack.Screen
+              name="Welcome"
+              component={Welcome}
+            />
+            <Stack.Screen
+              name="Home"
+              component={Home}
+            />
+            <Stack.Screen
+              name="SignUp"
+              component={SignUp}
+            />
+            <Stack.Screen
+              name="CreateTopico"
+              component={CreateTopico}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </GestureHandlerRootView>
+    </UserProvider>
   );
 }

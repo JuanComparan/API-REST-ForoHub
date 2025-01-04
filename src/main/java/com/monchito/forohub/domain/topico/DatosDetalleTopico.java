@@ -15,12 +15,13 @@ public record DatosDetalleTopico(
         LocalDateTime fecha,
         Curso curso,
         String autor,
+        String autorOcupacion,
         List<DatosDetalleRespuestaTopico> respuestas,
         Solucion solucion
 ) {
     public DatosDetalleTopico(Topico topico){
         this(topico.getId(), topico.getTitulo(), topico.getMensaje(), topico.getFechaCreacion(),
-                topico.getCurso(), topico.getAutor().getNombreDeUsuario(),
+                topico.getCurso(), topico.getAutor().getNombreDeUsuario(), topico.getAutor().getOcupacion(),
                 topico.getRespuestas().stream()
                         .map(DatosDetalleRespuestaTopico::new).collect(Collectors.toList()),
                 topico.getSolucion());

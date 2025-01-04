@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { ScrollView, View, StyleSheet, Pressable, Text } from "react-native";
 import { DrawerActions, useFocusEffect, useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import globalStyles from "../../styles/globalStyles";
 import DisplayImageComponent from "../../components/DisplayImageComponent";
@@ -10,10 +11,13 @@ import CategoryBarComponent from "../../components/CategoryBarComponent";
 import { getTopico, Topico } from "../api/TopicoService";
 import { FlatList } from "react-native-gesture-handler";
 import TopicoComponent from "../../components/TopicoComponent";
+import { useUser } from "../api/UserProvider";
 
-export default function Home() {
-    const navigation = useNavigation();
+interface Props {
+    navigation: StackNavigationProp<any>;
+}
 
+export default function Home({ navigation }: Props) {
     // Definimos las variables para obtener los topicos
     const [topico, setTopico] = useState<Topico[]>([]);
 
@@ -29,6 +33,7 @@ export default function Home() {
                     fecha: item.fecha,
                     curso: item.curso.categoria,
                     autor: item.autor,
+                    autorOcupacion: item.autorOcupacion,
                     solucion: item.solucion,
                     listaRespuestas: item.respuestas.map((respuesta: any) => ({
                         id: respuesta.id,
@@ -75,19 +80,18 @@ export default function Home() {
                             <CategoryBarComponent text="Redes Sociales" />
                             <CategoryBarComponent text="Noticias" />
                         </View>
-                        <Pressable style={styles.createBar}>
+                        <Pressable style={styles.createBar} onPress={() => navigation.navigate("CreateTopico")}>
                             <Text style={globalStyles.text}>Crear un topico</Text>
                         </Pressable>
 
                         <FlatList
                             data={topico}
-                            renderItem={({item}) => (
+                            renderItem={({ item }) => (
                                 <TopicoComponent
                                     item={item}
                                 />
                             )}
                         />
-
                     </View>
                 </View>
             </ScrollView>
@@ -111,5 +115,5 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         margin: 5,
     },
-    
+
 })

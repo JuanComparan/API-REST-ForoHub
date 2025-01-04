@@ -14,7 +14,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import InputComponent from "../../components/inputComponent";
 import InputPasswordComponent from "../../components/inputPasswordComponent";
 import globalStyles from "../../styles/globalStyles";
-import { autorError, iniciarSesion } from "../api/SignUpService";
+import { iniciarSesion } from "../api/SignUpService";
 
 interface Props {
   navigation: StackNavigationProp<any>;
@@ -30,10 +30,6 @@ export default function Welcome({ navigation, onSuccess }: Props) {
     title: string;
     errorMessages: string[];
   } | null>(null);
-
-  useEffect(() => {
-    setError(autorError);
-  }, [autorError]);
 
   const handleAction = () => {
     // Llamamos al Service

@@ -1,11 +1,11 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { KeyboardAvoidingView, Platform, ScrollView, View, Text, Pressable, StyleSheet } from "react-native";
+import { ScrollView, View, Text, Pressable, StyleSheet } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import globalStyles from "../../styles/globalStyles";
 import InputComponent from "../../components/inputComponent";
 import InputPasswordComponent from "../../components/inputPasswordComponent";
-import { autorError, crearAutor } from "../api/SignUpService";
-import { useEffect, useState } from "react";
+import { crearAutor } from "../api/SignUpService";
+import { useState } from "react";
 import ImagePickerComponent from "../../components/ImagePickerComponent";
 
 interface Props {
@@ -26,11 +26,8 @@ export default function SignUp({ navigation, onAutorAdd }: Props) {
         time: string;
     } | null>(null);
 
-    useEffect(() => {
-        setError(autorError);
-    }, [autorError]);
-
     const handleAction = () => {
+        console.log("Tapeo")
         // Llamamos al Service
         crearAutor(
             navigation,
@@ -39,7 +36,7 @@ export default function SignUp({ navigation, onAutorAdd }: Props) {
             contrasena,
             ocupacion,
             onAutorAdd,
-            setError
+            setError,
         )
     };
 

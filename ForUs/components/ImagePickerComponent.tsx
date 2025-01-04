@@ -45,18 +45,18 @@ const ImagePickerComponent = () => {
   };
 
   return (
-    <View style={styles.imageContainer}>
-      <Pressable onPress={selectImage}>
-        <Image
-          source={
-            imageUri
-              ? { uri: imageUri }
-              : require("../assets/images/iconUser.png")
-          } // Placeholder
-          style={styles.image}
-        />
-      </Pressable>
-    </View>
+      <View style={styles.imageContainer}>
+        <Pressable onPress={selectImage}>
+          <Image
+            source={
+              imageUri
+                ? { uri: imageUri }
+                : require("../assets/images/iconUserAdd.png")
+            } // Placeholder
+            style={styles.image}
+          />
+        </Pressable>
+      </View>
   );
 };
 
@@ -71,9 +71,10 @@ const styles = StyleSheet.create({
     //backgroundColor: 'green'
   },
   imageContainer: {
+    alignSelf: 'center',
+    width: 205,
     borderWidth: 2,
     borderRadius: 100,
-    borderColor: "#000000"
-    //backgroundColor: "red",
+    borderColor: "#000000",
   },
 });

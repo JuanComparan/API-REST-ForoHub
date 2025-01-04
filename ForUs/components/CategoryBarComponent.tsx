@@ -3,6 +3,7 @@ import globalStyles from "../styles/globalStyles";
 
 interface Props {
     text: string;
+    //curso: (id: number) => void;
 }
 
 export default function CategoryBarComponent({ text }: Props) {

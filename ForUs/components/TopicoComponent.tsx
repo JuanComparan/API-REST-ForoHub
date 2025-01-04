@@ -15,20 +15,20 @@ export default function TopicoComponent({ item }: Props) {
                 <DisplayImageComponent />
                 <View style={styles.topicoTitle}>
                     <Text style={globalStyles.text}>{item.autor}</Text>
-                    <Text style={{ color: '#BCBCBC' }}></Text>
+                    <Text style={styles.topicoAlterText}>{item.autorOcupacion}</Text>
                 </View>
             </View>
             <View style={styles.topicoMidArea}>
                 <View>
                     <Text style={styles.topicoTitleText}>{item.titulo}</Text>
                 </View>
-                <View style={{ paddingVertical: 5}}>
+                <View style={{ paddingVertical: 5 }}>
                     <Text style={styles.topicoText}>{item.mensaje}</Text>
                 </View>
                 <View style={{ paddingVertical: 5 }}>
                     <CategoryBarComponent text={item.curso} />
                 </View>
-                <View style={{ borderTopWidth: 1, borderColor: '#BCBCBC', width: '92%', }} />
+                <View style={styles.line} />
             </View>
             <View style={styles.topicoBottomArea}>
                 <View style={{ flexDirection: 'row', paddingTop: 5 }}>
@@ -70,12 +70,20 @@ const styles = StyleSheet.create({
         fontWeight: "medium",
         color: "#ffffff",
     },
+    topicoAlterText: {
+        color: "#BCBCBC",
+    },
     topicoTitle: {
         paddingHorizontal: 10
     },
     topicoMidArea: {
         flex: 2,
         paddingLeft: 10,
+    },
+    line: { 
+        borderTopWidth: 1, 
+        borderColor: '#BCBCBC', 
+        width: '92%', 
     },
     topicoBottomArea: {
         flex: 0.8,

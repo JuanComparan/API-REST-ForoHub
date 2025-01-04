@@ -1,4 +1,6 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ip } from "./IP";
+
 
 export const iniciarSesion = async (
     navigation: any,
@@ -42,11 +44,15 @@ export const iniciarSesion = async (
                 });
             }
 
-            console.error("Error al crear el usuario:", errorData);
+            console.error("Error al iniciar sesion:", errorData);
             return;
         }
 
         const data = await response.json();
+
+        // Guardamos el ID globalmente
+        await AsyncStorage.setItem("userId", data.id.toString());
+
         console.log("Sesion Iniciada!!", data);
 
         if (onSuccess) {
@@ -76,6 +82,7 @@ export const crearAutor = async (
     onSuccess?: () => void,
     setError?: React.Dispatch<React.SetStateAction<{ title: string; errorMessages: string[]; time: string } | null>>
 ) => {
+
     // DTO de autor
     const AutorDTO = {
         nombre,
@@ -118,6 +125,7 @@ export const crearAutor = async (
         }
 
         const data = await response.json();
+
         console.log("Usuario creado!!", data);
 
         if (onSuccess) {

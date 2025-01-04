@@ -30,7 +30,7 @@ public class TopicoController {
     }
 
     @GetMapping
-    public ResponseEntity <Page<DatosDetalleTopico>> listarTopicos(@PageableDefault(size = 4, sort = "fechaCreacion",
+    public ResponseEntity <Page<DatosDetalleTopico>> listarTopicos(@PageableDefault(size = 10, sort = "fechaCreacion",
             direction = Sort.Direction.DESC) Pageable paginacion){
         return ResponseEntity.ok(topicoRepository.findByActivoTrue(paginacion).map(DatosDetalleTopico::new));
     }
