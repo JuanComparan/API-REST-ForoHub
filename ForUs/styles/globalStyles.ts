@@ -59,16 +59,16 @@ const globalStyles = StyleSheet.create({
         textAlign: 'center',
     },
     // Botones
-    input: {
-        alignSelf: "center",
-        width: '80%',
-        backgroundColor: "#8E8E8E",
-        borderColor: "#787777",
-        borderRadius: 8,
-        padding: 10,
-        fontSize: 18,
-        color: "#ffffff"
-    },
+        input: {
+            alignSelf: "center",
+            width: '80%',
+            backgroundColor: "#8E8E8E",
+            borderColor: "#787777",
+            borderRadius: 8,
+            padding: 10,
+            fontSize: 18,
+            color: "#ffffff"
+        },
     button: {
         alignSelf: "center",
         justifyContent: "center",

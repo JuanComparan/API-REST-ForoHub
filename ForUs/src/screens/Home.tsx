@@ -11,7 +11,7 @@ import CategoryBarComponent from "../../components/CategoryBarComponent";
 import { getTopico, Topico } from "../api/TopicoService";
 import { FlatList } from "react-native-gesture-handler";
 import TopicoComponent from "../../components/TopicoComponent";
-import { useUser } from "../api/UserProvider";
+import { Curso, getCurso } from "../api/CursoService";
 
 interface Props {
     navigation: StackNavigationProp<any>;
@@ -21,11 +21,16 @@ export default function Home({ navigation }: Props) {
     // Definimos las variables para obtener los topicos
     const [topico, setTopico] = useState<Topico[]>([]);
 
+    // Bandera para la categoria
+    const [bandera, setBandera] = useState(false);
+    const [idCurso, setIdCurso] = useState();
+    const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+
     // Funcion para obtener los topicos
     useFocusEffect(
         React.useCallback(() => {
             const fetchData = async () => {
-                const response = await getTopico(); // Obtener los datos del backend
+                const response = await getTopico(bandera, idCurso); // Obtener los datos del backend
                 const topicos = response.content.map((item: any) => ({
                     id: item.id,
                     titulo: item.titulo,
@@ -47,8 +52,43 @@ export default function Home({ navigation }: Props) {
                 setTopico(topicos);
             };
             fetchData();
+        }, [bandera, idCurso]) // Se ejecutará cuando la pantalla se enfoque o se seleccione otra categoria
+    );
+
+    const handleCategorySelect = (idCurso: number) => {
+        if (selectedCategory === idCurso) {
+            // Si la categoría ya está seleccionada, deseleccionarla
+            setSelectedCategory(null);
+            setBandera(false); // Vuelve a mostrar todos los tópicos
+            setIdCurso(undefined); // Limpia el ID del curso
+        } else {
+            // Seleccionar una nueva categoría
+            setSelectedCategory(idCurso);
+            setBandera(true); // Filtra por categoría
+            setIdCurso(idCurso); // Establece el ID del curso seleccionado
+        }
+    };
+
+    // Variable para obtener una lista de curso
+    const [curso, setCurso] = useState<Curso[]>([]);
+
+    // Funcion para obtener los cursos
+    useFocusEffect(
+        React.useCallback(() => {
+            const fetchData = async () => {
+                const response = await getCurso(); // Obtener los datos del backend
+                const cursos = response.content.map((item) => ({
+                    id: item.id,
+                    nombre: item.nombre,
+                    categoria: item.categoria
+                }));
+                setCurso(cursos);
+            };
+            fetchData();
         }, []) // Solo se ejecutará cuando la pantalla se enfoque
     );
+
+    // Pendiente funcion para mandar item a pantalla de TopicoScreen, donde se renderizara
 
     return (
         <LinearGradient
@@ -74,18 +114,29 @@ export default function Home({ navigation }: Props) {
                     </View>
                     <View style={[globalStyles.inputArea, { justifyContent: 'flex-start' }]}>
                         <SearchBarComponent />
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-around', paddingRight: 25 }}>
-                            <CategoryBarComponent text="Cocina" />
-                            <CategoryBarComponent text="Tecnologia" />
-                            <CategoryBarComponent text="Redes Sociales" />
-                            <CategoryBarComponent text="Noticias" />
+                        <View>
+                            <FlatList
+                                data={curso}
+                                keyExtractor={(item) => item.id.toString()}
+                                horizontal
+                                showsHorizontalScrollIndicator
+                                renderItem={({ item }) => (
+                                    <View style={{ width: 250, marginRight: -167 }}>
+                                        <CategoryBarComponent 
+                                            item={item} 
+                                            onSelectedCategory={handleCategorySelect}
+                                            isSelected={selectedCategory === item.id} // Pasa el estado seleccionado 
+                                        />
+                                    </View>
+                                )}
+                            />
                         </View>
                         <Pressable style={styles.createBar} onPress={() => navigation.navigate("CreateTopico")}>
                             <Text style={globalStyles.text}>Crear un topico</Text>
                         </Pressable>
-
                         <FlatList
                             data={topico}
+                            keyExtractor={(item) => item.id.toString()}
                             renderItem={({ item }) => (
                                 <TopicoComponent
                                     item={item}

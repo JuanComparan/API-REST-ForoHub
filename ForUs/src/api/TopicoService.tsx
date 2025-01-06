@@ -13,10 +13,15 @@ export interface Topico {
     listaRespuestas: Respuesta[];
 }
 
-export const getTopico = async () => {
+export const getTopico = async (bandera, idCurso) => {
+    // Definir la URL base dependiendo de la bandera
+    const url = bandera
+        ? `http://${ip}:8080/topicos/curso/${idCurso}`
+        : `http://${ip}:8080/topicos`;
+
     try {
         const response = await fetch(
-            `http://${ip}:8080/topicos`, {
+            url, {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json",

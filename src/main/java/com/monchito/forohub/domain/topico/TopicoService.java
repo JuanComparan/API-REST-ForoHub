@@ -74,6 +74,16 @@ public class TopicoService {
         return topico.map(DatosDetalleTopico::new);
     }
 
+    public Page<DatosDetalleTopico> obtenerTopicoPorCurso(Long id, Pageable paginacion) {
+        if(!cursoRepository.findById(id).isPresent()){
+            throw  new ValidacionDeIntegridad("Este id para la categoria no fue encontrado");
+        }
+
+        var topico = topicoRepository.findByCursoId(id, paginacion);
+
+        return topico.map(DatosDetalleTopico::new);
+    }
+
     public void eliminarTopico(Long id) {
         if(!topicoRepository.findById(id).isPresent()){
             throw new ValidacionDeIntegridad("Este id para el topico no fue encontrado");

@@ -43,9 +43,17 @@ public class TopicoController {
     }
 
     @GetMapping("/autor/{id}")
-    public ResponseEntity <Page<DatosDetalleTopico>> listarTopicosPorAutor(@PathVariable Long id, @PageableDefault(size = 4, sort = "fechaCreacion",
+    public ResponseEntity <Page<DatosDetalleTopico>> listarTopicosPorAutor(@PathVariable Long id, @PageableDefault(size = 10, sort = "fechaCreacion",
             direction = Sort.Direction.DESC) Pageable paginacion){
         var response =  servicio.obtenerTopicoPorAutor(id, paginacion);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/curso/{id}")
+    public ResponseEntity <Page<DatosDetalleTopico>> listarTopicosPorCurso(@PathVariable Long id, @PageableDefault(size = 10, sort = "fechaCreacion",
+            direction = Sort.Direction.DESC) Pageable paginacion){
+        var response =  servicio.obtenerTopicoPorCurso(id, paginacion);
 
         return ResponseEntity.ok(response);
     }

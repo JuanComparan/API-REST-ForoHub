@@ -8,6 +8,7 @@ import Home from './screens/Home';
 import SignUp from './screens/SignUp';
 import CreateTopico from './screens/CreateTopico';
 import { MyContextProvider, UserProvider } from './api/UserProvider';
+import TopicoScreen from './screens/TopicoScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,7 +22,7 @@ export default function App() {
       <GestureHandlerRootView style={{ flex: 1 }}>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName='Welcome'
+            initialRouteName='Home'
             screenOptions={{
               headerShown: false,
               animation: 'fade_from_bottom'
@@ -42,6 +43,10 @@ export default function App() {
             <Stack.Screen
               name="CreateTopico"
               component={CreateTopico}
+            />
+            <Stack.Screen
+              name="TopicoScreen"
+              component={TopicoScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>
