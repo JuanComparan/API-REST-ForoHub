@@ -9,6 +9,12 @@ interface Props {
 }
 
 export default function CategoryBarComponent({ item, onSelectedCategory, isSelected }: Props) {
+    // Formato del texto
+    const formatString = (input: string) => {
+        return input.replace(/_/g, " ");
+    }
+
+
     if (!item) return null; // Si item es undefined, no renderiza nada
 
     const handleAction = () => {
@@ -27,7 +33,7 @@ export default function CategoryBarComponent({ item, onSelectedCategory, isSelec
         >
             <Text style={[globalStyles.text, 
                 { color: isSelected ? "#FFFFFF" : "#BCBCBC", fontSize: 8 },
-                ]}>{item.categoria}</Text>
+                ]}>{formatString(item.categoria)}</Text>
         </Pressable>
     )
 }

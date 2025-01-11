@@ -14,7 +14,7 @@ interface Props {
     route: RouteProp<RootStackParamList, "TopicoComponent">;
 }
 
-export default function TopicoScreen({ item }: Props) {
+export default function TopicoScreen({ item, navigation }: Props) {
     return (
         <LinearGradient
             // Colores del degradado
@@ -26,7 +26,7 @@ export default function TopicoScreen({ item }: Props) {
             end={{ x: 0, y: 1 }}
             style={{ flex: 1 }}
         >
-            <TopicoComponent item={item} />
+            <TopicoComponent item={item} navigation={navigation}/>
         </LinearGradient>
     )
 }

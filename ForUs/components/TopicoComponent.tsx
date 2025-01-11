@@ -4,7 +4,6 @@ import DisplayImageComponent from "./DisplayImageComponent";
 import globalStyles from "../styles/globalStyles";
 import { Topico } from "../src/api/TopicoService";
 import CategoryBarComponentText from "./CategoryBarComponentText";
-import { RouteProp } from "@react-navigation/native";
 interface Props {
     item: Topico;
     navigation: StackNavigationProp<any>;
@@ -13,11 +12,17 @@ interface Props {
 export default function TopicoComponent({ item, navigation }: Props) {
 
     // Pendiente Funcion para recibir parametros y colocarlos de ser asi
-    const handlePress = (item: Topico) => {
+    //const handlePress = (item: Topico) => {
+    //    console.log("Presiono el topico");
+    //    navigation.navigate("TopicoScreen", {
+    //        topico: item
+    //    })
+    //}
+    
+    // Pendiente Funcion para recibir parametros y colocarlos de ser asi
+    const handlePress = () => {
         console.log("Presiono el topico");
-        navigation.navigate("TopicoScreen", {
-            topico: item
-        })
+        navigation.navigate("CreateReply");
     }
 
     return (

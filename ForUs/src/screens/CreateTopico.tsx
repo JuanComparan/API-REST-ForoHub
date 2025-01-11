@@ -3,15 +3,15 @@ import { LinearGradient } from "expo-linear-gradient";
 import { ScrollView, View, Text, Pressable, FlatList } from "react-native";
 import InputComponent from "../../components/inputComponent";
 import globalStyles from "../../styles/globalStyles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addTopico } from "../api/TopicoService";
 import CategoryBarComponent from "../../components/CategoryBarComponent";
-import { useUser } from "../api/UserProvider";
 import { Curso, getCurso } from "../api/CursoService";
 import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
-import CategoryBarComponentText from "../../components/CategoryBarComponentText";
 import InputLargeText from "../../components/inputLargeText";
+import { getUserId } from "../api/AsyncStorageService";
+import SolutionBoxComponent from "../../components/SolutionBoxComponent";
 
 interface Props {
     navigation: StackNavigationProp<any>;
@@ -19,16 +19,26 @@ interface Props {
 }
 
 export default function CreateTopico({ navigation, onTopicoAdd }: Props) {
-    // Variable global
-    const { userId } = useUser();
-    const IdAutor = Number(userId);
+    // Obtener el ID del usuario guardado globalmente.
+    useEffect(() => {
+        const fetchUserId = async () => {
+            try {
+                const user_id = await getUserId("UserId");
+                console.log("ID en crear topico: ", user_id);
+                setIdAutor(user_id);
+            } catch {
+                console.error("Error al obtener el ID del usuario: ", error);
+            }
+        };
 
-    console.log("Tu ID es: ", IdAutor);
-
+        fetchUserId();
+    }, []);
+    
     // Variables de los campos
     const [titulo, setTitulo] = useState("");
     const [mensaje, setMensaje] = useState("");
     const [IdCurso, setIdCurso] = useState();
+    const [IdAutor, setIdAutor] = useState();
     const [solucion, setSolucion] = useState("");
 
     // Variable para obtener una lista de curso
@@ -145,8 +155,8 @@ export default function CreateTopico({ navigation, onTopicoAdd }: Props) {
                                 <InputLargeText text="Mensaje" value={mensaje} variable={setMensaje} />
                                 <Text style={[globalStyles.title, { fontWeight: 'medium', fontSize: 25, marginVertical: 10}]}>¿Requiere una Solución?</Text>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                                    <CategoryBarComponentText text="Si" solucion={setSolucion} />
-                                    <CategoryBarComponentText text="No" solucion={setSolucion} />
+                                    <SolutionBoxComponent text="Si" solucion={setSolucion} />
+                                    <SolutionBoxComponent text="No" solucion={setSolucion} />
                                 </View>
                             </View>
                         </View>

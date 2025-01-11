@@ -140,6 +140,7 @@ export default function Home({ navigation }: Props) {
                             renderItem={({ item }) => (
                                 <TopicoComponent
                                     item={item}
+                                    navigation={navigation}
                                 />
                             )}
                         />

@@ -9,6 +9,7 @@ import SignUp from './screens/SignUp';
 import CreateTopico from './screens/CreateTopico';
 import { MyContextProvider, UserProvider } from './api/UserProvider';
 import TopicoScreen from './screens/TopicoScreen';
+import CreateReply from './screens/CreateReply';
 
 const Stack = createNativeStackNavigator();
 
@@ -47,6 +48,10 @@ export default function App() {
             <Stack.Screen
               name="TopicoScreen"
               component={TopicoScreen}
+            />
+            <Stack.Screen
+              name="CreateReply"
+              component={CreateReply}
             />
           </Stack.Navigator>
         </NavigationContainer>

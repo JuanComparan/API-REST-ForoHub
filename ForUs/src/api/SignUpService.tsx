@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ip } from "./IP";
+import { getUserId, saveUserId } from "./AsyncStorageService";
 
 
 export const iniciarSesion = async (
@@ -51,7 +52,11 @@ export const iniciarSesion = async (
         const data = await response.json();
 
         // Guardamos el ID globalmente
-        await AsyncStorage.setItem("userId", data.id.toString());
+        console.log("ID del usuario iniciado: ", data.id)
+        
+        await saveUserId("UserId", data.id);
+        const myId = await getUserId("UserId")
+        console.log("ID guardada: ", myId);
 
         console.log("Sesion Iniciada!!", data);
 

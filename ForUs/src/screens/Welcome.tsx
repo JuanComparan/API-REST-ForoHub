@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Platform,
+  Button,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -15,6 +16,7 @@ import InputComponent from "../../components/inputComponent";
 import InputPasswordComponent from "../../components/inputPasswordComponent";
 import globalStyles from "../../styles/globalStyles";
 import { iniciarSesion } from "../api/SignUpService";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface Props {
   navigation: StackNavigationProp<any>;
@@ -42,6 +44,15 @@ export default function Welcome({ navigation, onSuccess }: Props) {
     )
   };
 
+  const borrarCache = async () => {
+    try {
+      await AsyncStorage.clear();
+      console.log('Caché borrado exitosamente');
+    } catch (error) {
+      console.error('Error al borrar el caché:', error);
+    }
+  }
+
   return (
     <LinearGradient
       // Colores del degradado
@@ -53,45 +64,49 @@ export default function Welcome({ navigation, onSuccess }: Props) {
       end={{ x: 0, y: 1 }}
       style={{ flex: 1 }}
     >
-        <ScrollView
-          contentContainerStyle={globalStyles.scrollContainer}
-          keyboardShouldPersistTaps="handled"
-        >
-          <View style={globalStyles.screen}>
-            {/* Imagen y título */}
-            <View style={[globalStyles.topScreen, {marginTop: 0}]}>
-              <Image
-                source={require("../../assets/ForUsLogo.png")}
-                style={styles.image}
-              />
-              <Text style={globalStyles.title}>Bienvenido!</Text>
-            </View>
-
-            {/* Área de inputs */}
-            <View style={globalStyles.inputArea}>
-              <InputComponent text="Correo Electrónico" value={correoElectronico} variable={setCorreoElectronico} />
-              <InputPasswordComponent text="Contraseña" value={contrasena} variable={setContrasena} />
-            </View>
-            {error && (
-              <View>
-                <Text style={globalStyles.error}>
-                  {error.title}: {error.errorMessages.join(", ")}
-                </Text>
-              </View>
-            )}
-            {/* Botones */}
-            <View style={globalStyles.buttonArea}>
-              <Pressable style={globalStyles.button} onPress={handleAction}>
-                <Text style={globalStyles.text}>Iniciar Sesión</Text>
-              </Pressable>
-              <Text style={globalStyles.text}>ó</Text>
-              <Pressable style={[globalStyles.button, { width: "50%" }]} onPress={() => navigation.navigate("SignUp")}>
-                <Text style={globalStyles.text}>Registrarse</Text>
-              </Pressable>
-            </View>
-
+      <ScrollView
+        contentContainerStyle={globalStyles.scrollContainer}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View style={globalStyles.screen}>
+          {/* Imagen y título */}
+          <View style={[globalStyles.topScreen, { marginTop: 0 }]}>
+            <Image
+              source={require("../../assets/ForUsLogo.png")}
+              style={styles.image}
+            />
+            <Text style={globalStyles.title}>Bienvenido!</Text>
           </View>
-        </ScrollView>
+
+          {/* Área de inputs */}
+          <View style={globalStyles.inputArea}>
+            <InputComponent text="Correo Electrónico" value={correoElectronico} variable={setCorreoElectronico} />
+            <InputPasswordComponent text="Contraseña" value={contrasena} variable={setContrasena} />
+          </View>
+          {error && (
+            <View>
+              <Text style={globalStyles.error}>
+                {error.title}: {error.errorMessages.join(", ")}
+              </Text>
+            </View>
+          )}
+          {/* Botones */}
+          <View style={globalStyles.buttonArea}>
+            <Pressable style={globalStyles.button} onPress={handleAction}>
+              <Text style={globalStyles.text}>Iniciar Sesión</Text>
+            </Pressable>
+            <Text style={globalStyles.text}>ó</Text>
+            <Pressable style={[globalStyles.button, { width: "50%" }]} onPress={() => navigation.navigate("SignUp")}>
+              <Text style={globalStyles.text}>Registrarse</Text>
+            </Pressable>
+            <Button
+              onPress={borrarCache}
+              title="Borrar cache 😎"
+            />
+          </View>
+
+        </View>
+      </ScrollView>
     </LinearGradient>
   );
 }
