@@ -1,7 +1,11 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ip } from "./IP";
 import { getUserId, saveUserId } from "./AsyncStorageService";
 
+export interface Autor {
+    id: number,
+    nombre: string,
+    ocupacion: string
+}
 
 export const iniciarSesion = async (
     navigation: any,
@@ -53,7 +57,7 @@ export const iniciarSesion = async (
 
         // Guardamos el ID globalmente
         console.log("ID del usuario iniciado: ", data.id)
-        
+
         await saveUserId("UserId", data.id);
         const myId = await getUserId("UserId")
         console.log("ID guardada: ", myId);
@@ -147,5 +151,35 @@ export const crearAutor = async (
                 time: new Date().toISOString()
             });
         }
+    }
+}
+
+export const getAutor = async (id: number) => {
+    // URL
+    const url = `http://${ip}:8080/usuario/${id}`;
+
+    try {
+        const response = await fetch(
+            url, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }
+        );
+
+        if (response.ok) {
+            console.log("Se obtuvo el usuario correctamente");
+            return await response.json();
+        } else {
+            const errorData = await response.json();
+            if (response.status === 409) {
+                console.log("Error 409:", errorData);
+            }
+            console.log(errorData);
+            throw new Error("Error al obtener el usuario");
+        }
+    } catch (error) {
+        return [];
     }
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { ScrollView, View, StyleSheet, Pressable, Text } from "react-native";
 import { DrawerActions, useFocusEffect, useNavigation } from "@react-navigation/native";
@@ -12,6 +12,7 @@ import { getTopico, Topico } from "../api/TopicoService";
 import { FlatList } from "react-native-gesture-handler";
 import TopicoComponent from "../../components/TopicoComponent";
 import { Curso, getCurso } from "../api/CursoService";
+import { getUserId } from "../api/AsyncStorageService";
 
 interface Props {
     navigation: StackNavigationProp<any>;
@@ -69,6 +70,24 @@ export default function Home({ navigation }: Props) {
         }
     };
 
+    // Variable de autor
+    const [IdAutor, setIdAutor] = useState();
+
+    // Obtener el ID del usuario guardado globalmente.
+    useEffect(() => {
+        const fetchUserId = async () => {
+            try {
+                const user_id = await getUserId("UserId");
+                console.log("ID del usuario: ", user_id);
+                setIdAutor(user_id);
+            } catch {
+                console.error("Error al obtener el ID del usuario: ", Error);
+            }
+        };
+
+        fetchUserId();
+    }, []);
+
     // Variable para obtener una lista de curso
     const [curso, setCurso] = useState<Curso[]>([]);
 
@@ -87,8 +106,6 @@ export default function Home({ navigation }: Props) {
             fetchData();
         }, []) // Solo se ejecutará cuando la pantalla se enfoque
     );
-
-    // Pendiente funcion para mandar item a pantalla de TopicoScreen, donde se renderizara
 
     return (
         <LinearGradient
@@ -114,7 +131,7 @@ export default function Home({ navigation }: Props) {
                     </View>
                     <View style={[globalStyles.inputArea, { justifyContent: 'flex-start' }]}>
                         <SearchBarComponent />
-                        <View>
+                        <View style={styles.categoryBarArea}>
                             <FlatList
                                 data={curso}
                                 keyExtractor={(item) => item.id.toString()}
@@ -122,8 +139,8 @@ export default function Home({ navigation }: Props) {
                                 showsHorizontalScrollIndicator
                                 renderItem={({ item }) => (
                                     <View style={{ width: 250, marginRight: -167 }}>
-                                        <CategoryBarComponent 
-                                            item={item} 
+                                        <CategoryBarComponent
+                                            item={item}
                                             onSelectedCategory={handleCategorySelect}
                                             isSelected={selectedCategory === item.id} // Pasa el estado seleccionado 
                                         />
@@ -134,6 +151,7 @@ export default function Home({ navigation }: Props) {
                         <Pressable style={styles.createBar} onPress={() => navigation.navigate("CreateTopico")}>
                             <Text style={globalStyles.text}>Crear un topico</Text>
                         </Pressable>
+                        <Text style={styles.title}>Topicos Populares</Text>
                         <FlatList
                             data={topico}
                             keyExtractor={(item) => item.id.toString()}
@@ -141,6 +159,7 @@ export default function Home({ navigation }: Props) {
                                 <TopicoComponent
                                     item={item}
                                     navigation={navigation}
+                                    id_autor={IdAutor}
                                 />
                             )}
                         />
@@ -165,7 +184,18 @@ const styles = StyleSheet.create({
         backgroundColor: "#CDB388",
         borderColor: "#BFA375",
         borderRadius: 8,
-        margin: 5,
+        margin: 10,
     },
-
+    title: {
+        color: "#FFFFFF",
+        fontSize: 20,
+        fontWeight: "semibold",
+        width: '90%',
+        margin: 5,
+        padding: 2,
+        //backgroundColor: 'red',
+    },
+    categoryBarArea: {
+        paddingVertical: 3
+    },
 })

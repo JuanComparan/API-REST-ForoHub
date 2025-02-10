@@ -23,7 +23,7 @@ export default function App() {
       <GestureHandlerRootView style={{ flex: 1 }}>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName='Home'
+            initialRouteName='Welcome'
             screenOptions={{
               headerShown: false,
               animation: 'fade_from_bottom'

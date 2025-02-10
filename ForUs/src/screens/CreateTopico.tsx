@@ -1,6 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import { LinearGradient } from "expo-linear-gradient";
-import { ScrollView, View, Text, Pressable, FlatList } from "react-native";
+import { ScrollView, View, Text, Pressable, FlatList, StyleSheet } from "react-native";
 import InputComponent from "../../components/inputComponent";
 import globalStyles from "../../styles/globalStyles";
 import { useEffect, useState } from "react";
@@ -12,6 +12,7 @@ import React from "react";
 import InputLargeText from "../../components/inputLargeText";
 import { getUserId } from "../api/AsyncStorageService";
 import SolutionBoxComponent from "../../components/SolutionBoxComponent";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 interface Props {
     navigation: StackNavigationProp<any>;
@@ -19,6 +20,19 @@ interface Props {
 }
 
 export default function CreateTopico({ navigation, onTopicoAdd }: Props) {
+    
+    // Variables de los campos
+    const [titulo, setTitulo] = useState("");
+    const [mensaje, setMensaje] = useState("");
+    const [IdCurso, setIdCurso] = useState();
+    const [IdAutor, setIdAutor] = useState();
+    const [solucion, setSolucion] = useState("");
+    
+    // Variable para obtener una lista de curso
+    const [curso, setCurso] = useState<Curso[]>([]);
+    const [bandera, setBandera] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+    
     // Obtener el ID del usuario guardado globalmente.
     useEffect(() => {
         const fetchUserId = async () => {
@@ -34,19 +48,6 @@ export default function CreateTopico({ navigation, onTopicoAdd }: Props) {
         fetchUserId();
     }, []);
     
-    // Variables de los campos
-    const [titulo, setTitulo] = useState("");
-    const [mensaje, setMensaje] = useState("");
-    const [IdCurso, setIdCurso] = useState();
-    const [IdAutor, setIdAutor] = useState();
-    const [solucion, setSolucion] = useState("");
-
-    // Variable para obtener una lista de curso
-    const [curso, setCurso] = useState<Curso[]>([]);
-    const [bandera, setBandera] = useState(false);
-    const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
-
-
     // Funcion para obtener los cursos
     useFocusEffect(
         React.useCallback(() => {
@@ -127,7 +128,12 @@ export default function CreateTopico({ navigation, onTopicoAdd }: Props) {
                 keyboardShouldPersistTaps="handled"
             >
                 <View style={globalStyles.screen}>
-                    <View style={globalStyles.topScreen}>
+                    <View style={[globalStyles.topScreen, {marginBottom: 2}]}>
+                        <View style={styles.topArea}>
+                            <Pressable onPress={() => navigation.goBack()}>
+                                <MaterialCommunityIcons name='arrow-left' size={50} color="#6B6B6B" />
+                            </Pressable>
+                        </View>
                         <Text style={globalStyles.title}>Crear Topico</Text>
                     </View>
                     <View style={{ backgroundColor: "rgba(43, 43, 43, 0.5)", flex: 1, marginBottom: 20, marginTop: 20, marginHorizontal: 10, borderRadius: 12 }}>
@@ -153,7 +159,7 @@ export default function CreateTopico({ navigation, onTopicoAdd }: Props) {
                                 </View>
                                 <InputComponent text="Titulo" value={titulo} variable={setTitulo} />
                                 <InputLargeText text="Mensaje" value={mensaje} variable={setMensaje} />
-                                <Text style={[globalStyles.title, { fontWeight: 'medium', fontSize: 25, marginVertical: 10}]}>¿Requiere una Solución?</Text>
+                                <Text style={[globalStyles.title, { fontWeight: 'medium', fontSize: 25, marginVertical: 10 }]}>¿Requiere una Solución?</Text>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                                     <SolutionBoxComponent text="Si" solucion={setSolucion} />
                                     <SolutionBoxComponent text="No" solucion={setSolucion} />
@@ -176,3 +182,12 @@ export default function CreateTopico({ navigation, onTopicoAdd }: Props) {
         </LinearGradient>
     )
 }
+
+const styles = StyleSheet.create({
+    topArea: {
+        alignSelf: "flex-start", // Ignora la alineación del padre
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        paddingLeft: 10,
+    },
+})

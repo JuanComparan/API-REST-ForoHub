@@ -35,4 +35,14 @@ public class AutorService {
 
         return new DatosDetalleAutor(autor.get());
     }
+
+    public DatosDetalleAutor obtenerTopico(Long id) {
+        if (!autorRepository.existsById(id)) {
+            throw new ValidacionDeIntegridad("No existe el id del autor");
+        }
+
+        var autor = autorRepository.findById(id).get();
+
+        return new DatosDetalleAutor(autor);
+    }
 }
